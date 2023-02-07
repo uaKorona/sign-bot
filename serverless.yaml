@@ -1,0 +1,33 @@
+{
+  service: "sign-bot",
+  frameworkVersion: "3",
+
+  package: {
+    excludeDevDependencies: true,
+  },
+
+  provider: {
+    name: "aws",
+    runtime: "nodejs16.x",
+    region: "eu-west-1"
+  },
+
+  plugins: [
+    "serverless-plugin-typescript"
+  ],
+
+  functions: {
+    mixerBot: {
+      name: "sign-bot",
+      handler: "handler.signBot",
+      events: [
+        {
+          httpApi: {
+            path: "/telegraf",
+            method: "post",
+          },
+        },
+      ],
+    },
+  },
+}
