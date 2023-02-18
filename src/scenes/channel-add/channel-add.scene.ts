@@ -82,5 +82,4 @@ function _saveResultToSession(ctx: MyContext, channel: ChannelAddModel): void {
     }
 
     ctx.session.channels.set(id, {title: channel.channelTitle });
-    console.log('saved id:', id, ctx.session.channels.get(id));
 }

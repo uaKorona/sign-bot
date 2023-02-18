@@ -12,7 +12,7 @@ export const CHANNEL_ADD_MESSAGES = {
         '@catsplusdogs або https://t.me/catsplusdogs',
     ]),
 
-    channelGetSuccess: (channelTitle: string) => `${channelTitle} знайдено успішно ✔️`,
+    channelGetSuccess: (channelTitle: string) => `${channelTitle} знайдено успішно 💚️`,
     chatGetFail: (failText: string) => `❌ Не вдалося розпізнати канал: ${failText}`,
 
     unSupportType: () => `Вибач, я не вмію обробляти такі повідомленя 🥰`

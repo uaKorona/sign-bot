@@ -1,1 +1,1 @@
-export const TEXT_MAX_LENGTH = 1024 as const;
+export const REPLACEMENT_REGEXP = /(.+)=(https:\/\/.+)/gmi;

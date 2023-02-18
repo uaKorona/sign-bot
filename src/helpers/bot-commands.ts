@@ -73,7 +73,7 @@ export class BotCommands {
 
     otherMessagesHandler = async (ctx: MyContext) => {
         const {text} = ctx.message as Message.TextMessage ?? {};
-        console.log('txt', text);
+        console.log('txt', text, ctx.session.channels);
 
         /*  switch (text) {
               case MAIN_BUTTONS.MEDIA:
@@ -113,48 +113,7 @@ export class BotCommands {
         return ctx.reply(MAIN_MESSAGES.mainKeyboardDescription(), MAIN_KEYBOARD)
     }
 
-    private _getCaption(ctx: MyContext): { caption: string, caption_entities: MessageEntity[], /*reply_markup: InlineKeyboardMarkup*/ } {
-        const divider = '\n\n';
-
-        const firstPart = [
-            // ctx.session.text,
-            divider
-        ];
-
-        const secondPart = [
-            MAIN_MESSAGES.sendJokeFooter(),
-            divider
-        ];
-
-        const thirdPart = [
-            MAIN_MESSAGES.groupName(),
-            MAIN_MESSAGES.inviteEnd(),
-        ];
-
-        const jokeOffset: number = this._getOffset(firstPart);
-        const inviteOffset: number = jokeOffset + this._getOffset(secondPart);
-
-        const caption_entities = [
-            this._botHelper.getCaptionEntityInvite(inviteOffset),
-            this._botHelper.getCaptionEntityJoke(jokeOffset)
-        ];
-
-        const caption = [...firstPart, ...secondPart, ...thirdPart].join('');
-
-        return {caption, caption_entities, /*...MAIN_PUBLISH_KEYBOARD*/};
-    }
-
     private _isSessionNotEmpty(ctx: MyContext): boolean {
         return ctx.session.channels.size > 0;
-    }
-
-    private _getOffset(texts: string[]): number {
-        return texts.reduce((res, curr) => {
-            if (curr == null) {
-                console.log(texts);
-            }
-
-            return res + (curr ?? '').length;
-        }, 0);
     }
 }

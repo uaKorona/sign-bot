@@ -2,6 +2,7 @@ import {Context} from "telegraf";
 import {Update} from "typegram";
 import {Message} from "typegram/message";
 import {MessageEntity} from "telegraf/typings/core/types/typegram.js";
+import {DIVIDER} from "./messages-wrapper.js";
 
 export class BotHelper {
     static builder(): BotHelper {
@@ -10,23 +11,12 @@ export class BotHelper {
     };
 
 
-    public getCaptionEntityInvite(offset: number): MessageEntity {
-        const url = 'https://t.me/catsplusdogs';
+    public getCaptionEntity(offset: number, length: number,  url: string): MessageEntity {
         return {
             offset,
-            length: url.length,
+            length,
             type: 'text_link',
-            url //this._inviteLink
-        };
-    }
-
-    public getCaptionEntityJoke(offset: number): MessageEntity {
-        const url = 'https://t.me/catsplusdogs';
-        return {
-            offset,
-            length: url.length,
-            type: 'text_link',
-            url //this._inviteLink
+            url
         };
     }
 
@@ -35,4 +25,24 @@ export class BotHelper {
         return next();
     }
 
+    public getCaption(signText: string, replaceLeft: string, replaceRight: string): { caption: string, caption_entities: MessageEntity[]} {
+        const caption = DIVIDER + signText;
+        const original = {caption: DIVIDER + signText, caption_entities: []};
+
+        if (!replaceLeft || !replaceRight) {
+            return original;
+        }
+
+        const offset = caption.indexOf(replaceLeft);
+
+        if (offset < 0) {
+            return original;
+        }
+
+        const caption_entities = [
+            this.getCaptionEntity(offset, replaceLeft.length, replaceRight)
+        ];
+
+        return {caption, caption_entities};
+    }
 }
