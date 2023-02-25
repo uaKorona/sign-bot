@@ -25,9 +25,9 @@ export class BotHelper {
         return next();
     }
 
-    public getCaption(signText: string, replaceLeft: string, replaceRight: string): { caption: string, caption_entities: MessageEntity[]} {
-        const caption = DIVIDER + signText;
-        const original = {caption: DIVIDER + signText, caption_entities: []};
+    public getCaption(messageText: string, signText: string, replaceLeft: string, replaceRight: string): { caption: string, caption_entities: MessageEntity[]} {
+        const caption = messageText + DIVIDER + DIVIDER + signText;
+        const original = {caption, caption_entities: []};
 
         if (!replaceLeft || !replaceRight) {
             return original;

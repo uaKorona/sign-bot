@@ -9,6 +9,7 @@ import {MessageEntity} from "telegraf/typings/core/types/typegram.js";
 import {SCENES_ID} from "../scenes/index.js";
 import {InlineKeyboardButton} from "telegraf/src/core/types/typegram.js";
 import {CHANNEL_ID} from "../consts/channel.consts.js";
+import {DIVIDER, messagesWrapper} from "./messages-wrapper.js";
 
 export class BotCommands {
     constructor(
@@ -30,12 +31,15 @@ export class BotCommands {
     }
 
     handleChannelMessage = async (ctx: Context<Update.ChannelPostUpdate>, next: () => Promise<void>) => {
-        console.log('from channel', ctx.channelPost);
         // @ts-ignore
-        const caption = ctx.channelPost?.caption ?? '';
+        const text = ctx.channelPost?.caption ?? '';
+        console.log('from channel', text);
+        const signText = 'Котики-Собачки';
+        const fullText = signText + ' 🐈🐕';
+        const url = 'https://t.me/catsplusdogs';
+        const {caption, caption_entities} = this._botHelper.getCaption(text, fullText, signText, url);
 
-        return ctx.telegram.editMessageCaption(ctx.channelPost.chat.id, ctx.channelPost.message_id, undefined, 'new cap')
-
+        return ctx.telegram.editMessageCaption(ctx.channelPost.chat.id, ctx.channelPost.message_id, undefined, caption, {caption_entities})
     }
 
     gotoAddChannelScene = async (ctx: MyContext) => {
