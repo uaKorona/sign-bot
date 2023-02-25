@@ -25,7 +25,7 @@ export class BotHelper {
         return next();
     }
 
-    public getCaption(signText: string, replaceLeft: string, replaceRight: string): { caption: string, caption_entities: MessageEntity[]} {
+    public getCaption(signText: string, replaceLeft: string | undefined, replaceRight: string | undefined): { caption: string, caption_entities: MessageEntity[]} {
         const caption = DIVIDER + signText;
         const original = {caption: DIVIDER + signText, caption_entities: []};
 
@@ -33,7 +33,7 @@ export class BotHelper {
             return original;
         }
 
-        const offset = caption.indexOf(replaceLeft);
+        const offset = caption.toLocaleLowerCase().indexOf(replaceLeft.toLocaleLowerCase());
 
         if (offset < 0) {
             return original;

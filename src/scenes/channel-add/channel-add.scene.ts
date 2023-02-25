@@ -53,7 +53,6 @@ CHANNEL_ADD_SCENE.on(MessageTypes.text, async (ctx, next) => {
         case TEXT_BUTTONS.TEXT_NEXT:
         case TEXT_BUTTONS.TEXT_CANCEL:
         {
-            console.log('leave CHANNEL_ADD_SCENE')
             await ctx.scene.leave();
 
             return _botHelper.nextWithEmptyText(ctx, next);

@@ -23,18 +23,38 @@ export class BotCommands {
         );
     }
 
-    initSession(ctx: MyContext, next: ()=> void): void {
+    initSession(ctx: MyContext, next: () => void): void {
+        console.log('initSession', ctx.session);
         ctx.session.channels ??= new Map<string, ChannelModel>();
 
         return next();
     }
 
-    handleChannelMessage = async (ctx: Context<Update.ChannelPostUpdate>, next: () => Promise<void>) => {
-        console.log('from channel', ctx.channelPost);
-        // @ts-ignore
-        const caption = ctx.channelPost?.caption ?? '';
+    handleChannelMessage = async (ctx: Context<Update.ChannelPostUpdate> & MyContext, next: () => Promise<void>) => {
+        const channelId = ctx.channelPost.chat.id;
+        const channel = this._getChannel(ctx, channelId);
 
-        return ctx.telegram.editMessageCaption(ctx.channelPost.chat.id, ctx.channelPost.message_id, undefined, 'new cap')
+        if (!channel) {
+            console.warn('channel not found', channelId);
+
+            return next();
+        }
+
+        console.log('from channel', channel.title);
+        // @ts-ignore
+        const originalCaption = ctx.channelPost?.caption ?? '';
+        // @ts-ignore
+        const originalEntities = ctx.channelPost?.caption_entities ?? [];
+        const fullCaption = originalCaption + channel.signText;
+        const {
+            caption,
+            caption_entities
+        } = this._botHelper.getCaption(fullCaption, channel.replaceLeft, channel.replaceRight);
+        const extra = {
+          caption_entities: [...originalEntities, ...caption_entities]
+        };
+
+        return ctx.telegram.editMessageCaption(channelId, ctx.channelPost.message_id, undefined, caption, extra);
 
     }
 
@@ -47,7 +67,7 @@ export class BotCommands {
 
         ctx.session.channels.forEach((value, key, channels) => {
             channelsButtons.push(Markup.button.callback(value.title, `${CHANNEL_ID}=${key}`));
-            console.log('channel:', value.title, ' : ', key );
+            console.log('channel:', value.title, ' : ', key);
         });
 
         return ctx.reply(
@@ -56,12 +76,17 @@ export class BotCommands {
         )
     }
 
-    editChannel(ctx: MyContext) {
+    editChannel = async (ctx: MyContext) => {
         // @ts-ignore
         const id = ctx.match[1];
-        const model = ctx.session.channels.get(id)
+        const model = this._getChannel(ctx, id);
+        await ctx.answerCbQuery(`Редагування каналу: ${model?.title}`);
 
         return ctx.scene.enter(SCENES_ID.CHANNEL_DETAILS_SCENE_ID, {[CHANNEL_ID]: id, model});
+    }
+
+    private _getChannel(ctx: MyContext, channelId: string | number): ChannelModel | undefined {
+        return ctx.session.channels.get(String(channelId));
     }
 
     publishPost = async (ctx: MyContext, next: () => Promise<void>) => {

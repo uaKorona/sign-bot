@@ -2,10 +2,17 @@ import {DIVIDER, messagesWrapper} from "../../helpers/messages-wrapper.js";
 import {TEXT_BUTTONS} from "./channel-details.keyboard.js";
 
 export const CHANNEL_DETAILS_MESSAGES = {
-    startMessage: (channelTitle: string) => messagesWrapper([
-        `Реагування каналу ${channelTitle}`,
+    startNewMessage: (channelTitle: string) => messagesWrapper([
+        `Реагування каналу: ${channelTitle}`,
         DIVIDER,
-        'Надішли текст нового підпису'
+        'Надішли текст, щоб задати новий підпис'
+    ]),
+
+    startUpdateMessage: (channelTitle: string) => messagesWrapper([
+        `Реагування каналу: ${channelTitle}`,
+        DIVIDER,
+        'Поточний підпис:',
+        DIVIDER
     ]),
 
     signChange: () => messagesWrapper([
@@ -34,9 +41,11 @@ export const CHANNEL_DETAILS_MESSAGES = {
 
     replacementExample: () => messagesWrapper([
         'Надішли текст автозаміни у форматі:',
-        'текст=заміна',
+        'текст=посилання',
         DIVIDER,
-        'Наприклад: "Підпишись=https://t.me/catsplusdogs"',
-        ])
+        'Наприклад:',
+        'Підпишись=https://t.me/catsplusdogs',
+        ]),
 
+    replacementSuccess: () => `Автозаміна додана успішно 💚`,
 }

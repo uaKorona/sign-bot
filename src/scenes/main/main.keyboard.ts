@@ -1,7 +1,7 @@
 import {Markup} from 'telegraf';
 
 export enum MAIN_BUTTONS {
-    VIEW_CHANNELS = '😍 Переглянути канали',
+    VIEW_CHANNELS = '✍️ Редагувати канали',
     ADD_CHANNEL = '🧩 Додати канал',
     PUBLISHED = 'Опубліковано ✅'
 }

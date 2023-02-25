@@ -8,40 +8,30 @@ import {BotHelper} from "../../helpers/bot-helper.js";
 import {ChannelDetailsModel} from "./channel-details.model.js";
 import {CHANNEL_ID} from "../../consts/channel.consts.js";
 import {REPLACEMENT_REGEXP} from "./channel-details.consts.js";
+import { Markup } from 'telegraf/typings/telegram-types.js';
+import { ReplyKeyboardMarkup } from 'typegram';
 
 export const CHANNEL_DETAILS_SCENE = new Scenes.BaseScene<MyContext>(SCENES_ID.CHANNEL_DETAILS_SCENE_ID);
 let _botHelper: BotHelper;
 let _channel: ChannelDetailsModel;
 
 CHANNEL_DETAILS_SCENE.enter(async (ctx,) => {
-    // @ts-ignore
-    const id: string = ctx.scene.state[CHANNEL_ID];
-    // @ts-ignore
-    const model: ChannelModel = ctx.scene.state.model;
-
-    _botHelper = BotHelper.builder();
-    _channel = ChannelDetailsModel.builder(id, model);
-    console.log('details', ctx.scene.state);
-
-    const keyboard = DETAILS_KEYBOARD(_channel.isSignSet());
-
-    return ctx.replyWithHTML(CHANNEL_DETAILS_MESSAGES.startMessage(_channel.title), keyboard);
+    return _initScene(ctx);
 });
 
 CHANNEL_DETAILS_SCENE.hears(REPLACEMENT_REGEXP, async (ctx) => {
     _channel.setReplacement(ctx.match[1], ctx.match[2]);
-    console.log('автозамініа:', _channel);
+    return ctx.reply(CHANNEL_DETAILS_MESSAGES.replacementSuccess(), SAVE_KEYBOARD);
 });
 
 CHANNEL_DETAILS_SCENE.hears(TEXT_BUTTONS.TEXT_PREVIEW,
     async (ctx) => {
-        const extra = _botHelper.getCaption(
+        return getSignPreview(
+            ctx,
             _channel.signText as string,
-            _channel.replaceLeft as string,
-            _channel.replaceRight as string
+            _channel.replaceLeft,
+            _channel.replaceRight
         );
-
-        return ctx.reply(extra.caption, {entities: extra.caption_entities, /*...SAVE_KEYBOARD*/});
     });
 
 CHANNEL_DETAILS_SCENE.hears(TEXT_BUTTONS.TEXT_REPLACEMENT, async (ctx) => {
@@ -80,6 +70,44 @@ CHANNEL_DETAILS_SCENE.on(MessageTypes.text, async (ctx, next) => {
 
 });
 
+function getSignPreview(ctx: MyContext, signText: string, replaceLeft: string | undefined, replaceRight: string | undefined, keyboard?:  Markup<ReplyKeyboardMarkup>) {
+    const captionData = _botHelper.getCaption(signText, replaceLeft, replaceRight);
+    let extra = {
+        entities: captionData.caption_entities,
+        disable_web_page_preview: true
+    };
+
+    if (keyboard) {
+        extra = {...extra, ...keyboard};
+    }
+
+    return ctx.reply(captionData.caption, extra);
+}
+
+function _initScene(ctx: MyContext) {
+    // @ts-ignore
+    const id: string = ctx.scene.state[CHANNEL_ID];
+    // @ts-ignore
+    const model: ChannelModel = ctx.scene.state.model;
+
+    _botHelper = BotHelper.builder();
+    _channel = ChannelDetailsModel.builder(id, model);
+
+    const isSignSet = _channel.isSignSet();
+    const keyboard = DETAILS_KEYBOARD(isSignSet);
+
+    if (!isSignSet) {
+        const text = CHANNEL_DETAILS_MESSAGES.startNewMessage(_channel.title);
+
+        return ctx.reply(text, keyboard);
+    }
+
+    const updateMessage = CHANNEL_DETAILS_MESSAGES.startUpdateMessage(_channel.title);
+    const fullMessage = updateMessage + _channel.signText;
+
+    return getSignPreview(ctx, fullMessage, _channel.replaceLeft, _channel.replaceRight, keyboard);
+}
+
 function _saveResultToSession(ctx: MyContext, channelDetails: ChannelDetailsModel): void {
     const {channelId, ...channel} = channelDetails;
     ctx.session.channels.set(String(channelId), channel)
@@ -87,9 +115,6 @@ function _saveResultToSession(ctx: MyContext, channelDetails: ChannelDetailsMode
 
 /**
  * TODO:
- * 1. do case-insensitive replacement
- * 2. add message on success replacement save
- * 3. Rename channels preview to channels edit
- * 3.1 Stop reaction button on channel edit
  * 4. Add channel delete button
+ * 5. Add second message for channel edit
  */
