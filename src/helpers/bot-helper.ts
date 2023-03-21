@@ -1,13 +1,9 @@
-import {Context} from "telegraf";
-import {Update} from "typegram";
-import {Message} from "typegram/message";
-import {MessageEntity} from "telegraf/typings/core/types/typegram.js";
 import {DIVIDER} from "./messages-wrapper.js";
+import {MessageEntity} from "@grammyjs/types/message.js";
 
 export class BotHelper {
     static builder(): BotHelper {
-        return new BotHelper(
-        );
+        return new BotHelper();
     };
 
 
@@ -20,10 +16,10 @@ export class BotHelper {
         };
     }
 
-    public nextWithEmptyText(ctx: Context<Update> ,next: () => Promise<void>): Promise<void> {
+   /* public nextWithEmptyText(ctx: Context<Update> ,next: () => Promise<void>): Promise<void> {
         (ctx.message as Message.TextMessage).text = ''; // NOTE: empty text before returning
         return next();
-    }
+    }*/
 
     public getCaption(messageText: string, signText: string, replaceLeft: string, replaceRight: string): { caption: string, caption_entities: MessageEntity[]} {
         const caption = messageText + DIVIDER + DIVIDER + signText;

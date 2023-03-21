@@ -1,3 +1,4 @@
+/*
 import {MAIN_BUTTONS} from "./main.keyboard.js";
 
 export const MAIN_MESSAGES = {
@@ -26,3 +27,4 @@ export const MAIN_MESSAGES = {
     sendJoke: () => `Прислати жартик`,
     sendJokeFooter: () => MAIN_MESSAGES.sendJoke() + ' ⚡',
 }
+*/

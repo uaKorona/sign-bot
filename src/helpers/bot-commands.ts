@@ -1,3 +1,4 @@
+/*
 import {Context, Markup} from "telegraf";
 import {Update} from "typegram";
 import {BotHelper} from "./bot-helper.js";
@@ -76,48 +77,8 @@ export class BotCommands {
     }
 
     otherMessagesHandler = async (ctx: MyContext) => {
-        const {text} = ctx.message as Message.TextMessage ?? {};
-        console.log('txt', text, ctx.session.channels);
-
-        /*  switch (text) {
-              case MAIN_BUTTONS.MEDIA:
-                  return ctx.scene.enter(SCENES_ID.CHANNEL_DETAILS_SCENE_ID);
-
-              case MAIN_BUTTONS.CANCEL:
-                   this._emptySession(ctx);
-                   break;
-
-              case MAIN_BUTTONS.PREVIEW:
-                  const extra = this._getCaption(ctx);
-
-                  if (ctx.session.photo) {
-                      return ctx.replyWithPhoto(ctx.session.photo, extra)
-                  }
-
-                  if (ctx.session.video) {
-                      return ctx.replyWithVideo(ctx.session.video, extra)
-                  }
-
-                  return ctx.reply(extra.caption, {entities: extra.caption_entities});
-
-              default: {
-                  if (TypeGuardsHelper.isString(text) && text.length) {
-                      ctx.session.text = text; //TODO: sanitize
-                  }
-              }
-
-          }*/
-
-        if (this._isSessionNotEmpty(ctx)) {
-            return ctx.reply(
-                MAIN_MESSAGES.addChannel(),
-                MAIN_KEYBOARD_WITH_PREVIEW)
-        }
-
+        // @ts-ignore
+        console.log('other message', ctx.message?.text)
         return ctx.reply(MAIN_MESSAGES.mainKeyboardDescription(), MAIN_KEYBOARD)
     }
-
-    private _isSessionNotEmpty(ctx: MyContext): boolean {
-        return ctx.session.channels.size > 0;
-    }
-}
+}*/

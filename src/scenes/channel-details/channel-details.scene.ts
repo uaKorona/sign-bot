@@ -1,3 +1,4 @@
+/*
 import {Scenes} from 'telegraf';
 import {DETAILS_KEYBOARD, SAVE_KEYBOARD, TEXT_BUTTONS} from "./channel-details.keyboard.js";
 import {ChannelModel, MyContext} from "../../session/index.js";
@@ -36,12 +37,13 @@ CHANNEL_DETAILS_SCENE.hears(REPLACEMENT_REGEXP, async (ctx) => {
 CHANNEL_DETAILS_SCENE.hears(TEXT_BUTTONS.TEXT_PREVIEW,
     async (ctx) => {
         const extra = _botHelper.getCaption(
+            '',
             _channel.signText as string,
             _channel.replaceLeft as string,
             _channel.replaceRight as string
         );
 
-        return ctx.reply(extra.caption, {entities: extra.caption_entities, /*...SAVE_KEYBOARD*/});
+        return ctx.reply(extra.caption, {entities: extra.caption_entities, /!*...SAVE_KEYBOARD*!/});
     });
 
 CHANNEL_DETAILS_SCENE.hears(TEXT_BUTTONS.TEXT_REPLACEMENT, async (ctx) => {
@@ -85,11 +87,11 @@ function _saveResultToSession(ctx: MyContext, channelDetails: ChannelDetailsMode
     ctx.session.channels.set(String(channelId), channel)
 }
 
-/**
+/!**
  * TODO:
  * 1. do case-insensitive replacement
  * 2. add message on success replacement save
  * 3. Rename channels preview to channels edit
  * 3.1 Stop reaction button on channel edit
  * 4. Add channel delete button
- */
+ *!/*/

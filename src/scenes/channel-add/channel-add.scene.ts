@@ -1,4 +1,4 @@
-import {Scenes} from 'telegraf';
+/*
 import {MyContext} from "../../session/index.js";
 import {SCENES_ID} from "../index.js";
 import {BotHelper} from "../../helpers/bot-helper.js";
@@ -6,7 +6,6 @@ import {CHANNEL_ADD_MESSAGES} from "./channel-add.messeges.js";
 import {DEFAULT_ADD_CHANNEL_KEYBOARD, SAVE_ADD_CHANNEL_KEYBOARD, TEXT_BUTTONS} from "./channel-add.keyboard.js";
 import {MessageTypes} from "../../message-types.enum.js";
 import {CHANNEL_REGEXP} from "./channel-add.consts.js";
-import {ChatFromGetChat} from "typegram/manage.js";
 import {ChannelAddModel} from "./channel-add.model.js";
 
 export const CHANNEL_ADD_SCENE = new Scenes.BaseScene<MyContext>(SCENES_ID.CHANNEL_ADD_SCENE_ID);
@@ -82,4 +81,4 @@ function _saveResultToSession(ctx: MyContext, channel: ChannelAddModel): void {
     }
 
     ctx.session.channels.set(id, {title: channel.channelTitle });
-}
+}*/

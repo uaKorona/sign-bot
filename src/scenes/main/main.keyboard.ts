@@ -1,3 +1,4 @@
+/*
 import {Markup} from 'telegraf';
 
 export enum MAIN_BUTTONS {
@@ -13,4 +14,4 @@ export const MAIN_KEYBOARD = Markup.keyboard([
 export const MAIN_KEYBOARD_WITH_PREVIEW = Markup.keyboard([
     [MAIN_BUTTONS.VIEW_CHANNELS],
     [MAIN_BUTTONS.ADD_CHANNEL]
-]).resize();
+]).resize();*/

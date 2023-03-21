@@ -1,3 +1,4 @@
+/*
 import {DIVIDER, messagesWrapper} from "../../helpers/messages-wrapper.js";
 import {TEXT_BUTTONS} from "./channel-details.keyboard.js";
 
@@ -40,3 +41,4 @@ export const CHANNEL_DETAILS_MESSAGES = {
         ])
 
 }
+*/

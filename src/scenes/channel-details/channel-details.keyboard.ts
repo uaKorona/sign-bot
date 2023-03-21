@@ -1,3 +1,4 @@
+/*
 import {Markup} from 'telegraf';
 
 export enum TEXT_BUTTONS {
@@ -26,3 +27,4 @@ export const DETAILS_KEYBOARD = (withPreview: boolean) => {
 }
 
 export const SAVE_KEYBOARD = Markup.keyboard(PREVIEW_SAVE_BOARD).resize()
+*/

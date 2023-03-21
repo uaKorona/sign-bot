@@ -1,14 +1,30 @@
-import {Telegraf} from 'telegraf';
-import {BotHelper} from "./helpers/bot-helper.js";
+import { Bot } from "grammy";
 import {ENV_CONFIG} from "./env/env.config.js";
-import {BotCommands} from "./helpers/bot-commands.js";
-import {MyContext} from "./session/index.js";
+import {BotHelper} from "./helpers/bot-helper.js";
+//import {BotCommands} from "./helpers/bot-commands.js";
 
-const botHelper = BotHelper.builder();
-const botCommands = new BotCommands(botHelper);
-export const bot = new Telegraf<MyContext>(ENV_CONFIG.BOT_TOKEN);
 
-bot.on('channel_post', botCommands.handleChannelMessage);
+const _botHelper = BotHelper.builder();
+//const botCommands = new BotCommands(botHelper);
+
+export const bot = new Bot(ENV_CONFIG.BOT_TOKEN);
+bot.on('channel_post:media', async (ctx) => {
+    const text = ctx.channelPost?.caption ?? '';
+    console.log('original text:', text ?? 'NO TEXT');
+    const signText = 'Котики-Собачки';
+    const fullText = signText + ' 🐈🐕';
+    const url = 'https://t.me/catsplusdogs';
+    const {caption, caption_entities} = _botHelper.getCaption(text, fullText, signText, url);
+
+
+    return ctx.editMessageCaption({caption, caption_entities})
+});
+
+bot.on("message", async (ctx) => {
+    await ctx.reply("Hi! Тест");
+});
+//bot.on('channel_post', botCommands.handleChannelMessage);
+//bot.use(botCommands.otherMessagesHandler);
 
 
 

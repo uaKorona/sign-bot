@@ -17,7 +17,7 @@
   ],
 
   functions: {
-    mixerBot: {
+    signBot: {
       name: "sign-bot",
       handler: "handler.signBot",
       events: [

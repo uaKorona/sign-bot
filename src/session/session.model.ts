@@ -1,3 +1,4 @@
+/*
 import {Context, Scenes} from "telegraf";
 import {ChannelModel} from "./channel.model.js";
 
@@ -16,4 +17,4 @@ export interface MyContext extends Context {
     scene: Scenes.SceneContextScene<MyContext, MySceneSession>;
     // ... more props go here
     session: MySession
-}
+}*/
