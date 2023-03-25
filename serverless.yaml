@@ -19,7 +19,7 @@
   functions: {
     signBot: {
       name: "sign-bot",
-      handler: "handler.signBot",
+      handler: "handler.botHandler",
       events: [
         {
           httpApi: {
