@@ -1,1 +1,1 @@
-export const REPLACEMENT_REGEXP = /(.+)=(https:\/\/.+)/gmi;
+export const REPLACEMENT_REGEXP = /(.+)=(https:\/\/.+)/gmi

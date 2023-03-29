@@ -1,4 +1,4 @@
 export enum MessageTypes {
-    text = 'text'
-    //document = 'document'
+  text = 'text'
+  // document = 'document'
 }

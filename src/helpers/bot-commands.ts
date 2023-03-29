@@ -81,4 +81,4 @@ export class BotCommands {
         console.log('other message', ctx.message?.text)
         return ctx.reply(MAIN_MESSAGES.mainKeyboardDescription(), MAIN_KEYBOARD)
     }
-}*/
+} */

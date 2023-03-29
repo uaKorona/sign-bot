@@ -18,7 +18,6 @@ const PREVIEW_SAVE_BOARD = [
     [TEXT_BUTTONS.TEXT_CANCEL, TEXT_BUTTONS.TEXT_NEXT]
 ];
 
-
 export const DETAILS_KEYBOARD = (withPreview: boolean) => {
     const buttons = withPreview ? PREVIEW_BOARD : EMPTY_BOARD;
 

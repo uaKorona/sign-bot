@@ -1,6 +1,6 @@
 export interface ChannelModel {
-    title: string;
-    signText?: string;
-    replaceLeft?: string;
-    replaceRight?: string;
+  title: string
+  signText?: string
+  replaceLeft?: string
+  replaceRight?: string
 }

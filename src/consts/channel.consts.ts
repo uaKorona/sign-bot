@@ -1,1 +1,1 @@
-export const CHANNEL_ID = 'channelId' as const;
+export const CHANNEL_ID = 'channelId' as const
